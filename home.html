@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,44 +17,685 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f1f1f1;
+            padding: 20px;
+            font-family: Arial;
+            padding-top: 80px;
+        }
+
+        /* Center website */
+        .main {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 50px;
+            word-break: break-all;
+        }
+
+        .row {
+            margin: 10px -16px;
+        }
+
+        /* Add padding BETWEEN each column */
+        .row,
+        .row>.column {
+            padding: 8px;
+        }
+
+        /* Create three equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 33.33%;
+            display: none;
+            /* Hide all elements by default */
+        }
+
+        /* Clear floats after rows */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Content */
+        .content {
+            background-color: white;
+            padding: 10px;
+        }
+
+        /* The "show" class is added to the filtered elements */
+        .show {
+            display: block;
+        }
+
+        /* Style the buttons */
+        .btn {
+            border: none;
+            outline: none;
+            padding: 12px 16px;
+
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: rgb(184, 189, 185);
+            color: black;
+
+        }
+
+        .btn.active {
+            background-color: #666;
+            color: white;
+        }
+
+        .show-cart li {
+            display: flex;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-img-top {
+            width: 200px;
+            height: 200px;
+            align-self: center;
+        }
+
+        #more {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
     <nav class="navbar navbar-inverse bg-inverse fixed-top bg-faded">
         <div class="row" style="float: right;">
             <div class="col">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart" style="float: Left;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                      </svg> Cart (<span
-                        class="total-count"></span>)</button>
-                        <button class="clear-cart btn btn-danger" style="float: right;"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-x" viewBox="0 0 16 16">
-                            <path d="M7.354 5.646a.5.5 0 1 0-.708.708L7.793 7.5 6.646 8.646a.5.5 0 1 0 .708.708L8.5 8.207l1.146 1.147a.5.5 0 0 0 .708-.708L9.207 7.5l1.147-1.146a.5.5 0 0 0-.708-.708L8.5 6.793 7.354 5.646z"/>
-                            <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                          </svg> Clear
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart"
+                    style="float: Left;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-cart" viewBox="0 0 16 16">
+                        <path
+                            d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                    </svg> Cart (<span class="total-count"></span>)</button>
+                <button class="clear-cart btn btn-danger" style="float: right;"> <svg xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" class="bi bi-cart-x" viewBox="0 0 16 16">
+                        <path
+                            d="M7.354 5.646a.5.5 0 1 0-.708.708L7.793 7.5 6.646 8.646a.5.5 0 1 0 .708.708L8.5 8.207l1.146 1.147a.5.5 0 0 0 .708-.708L9.207 7.5l1.147-1.146a.5.5 0 0 0-.708-.708L8.5 6.793 7.354 5.646z" />
+                        <path
+                            d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                    </svg> Clear
                     Cart</button>
             </div>
         </div>
     </nav>
     <div id="myBtnContainer" style="padding-top: 80px;">
-        <button class="btn active" onclick="filterSelection('all')"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
-          <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"/>
-        </svg> Show all</button>
-        <button class="btn" onclick="filterSelection('mobile')"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone-fill" viewBox="0 0 16 16">
-        <path d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2zm6 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z"/>
-      </svg> Smart Phones</button>
-        <button class="btn" onclick="filterSelection('grocery')"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 16">
-          <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"/>
-        </svg>  Grocery</button>
-        <button class="btn" onclick="filterSelection('WashingMachine')"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-WashingMachine-fill" viewBox="0 0 16 16">
-          <path d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-        </svg> WashingMachines</button>
-        <button class="btn" onclick="filterSelection('headphones')"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-headphones" viewBox="0 0 16 16">
-          <path d="M8 3a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a6 6 0 1 1 12 0v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1V8a5 5 0 0 0-5-5z"/>
-        </svg> Headphones</button>
-      </div>
-    
+        <button class="btn active" onclick="filterSelection('all')"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                <path
+                    d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z" />
+            </svg> Show all</button>
+        <button class="btn" onclick="filterSelection('mobile')"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-phone-fill" viewBox="0 0 16 16">
+                <path
+                    d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2zm6 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0z" />
+            </svg> Smart Phones</button>
+        <button class="btn" onclick="filterSelection('grocery')"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-basket3-fill" viewBox="0 0 16 16">
+                <path
+                    d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z" />
+            </svg> Grocery</button>
+        <button class="btn" onclick="filterSelection('WashingMachine')"> <svg xmlns="http://www.w3.org/2000/svg"
+                width="16" height="16" fill="currentColor" class="bi bi-WashingMachine-fill" viewBox="0 0 16 16">
+                <path
+                    d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+            </svg> WashingMachines</button>
+        <button class="btn" onclick="filterSelection('headphones')"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                height="16" fill="currentColor" class="bi bi-headphones" viewBox="0 0 16 16">
+                <path
+                    d="M8 3a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a6 6 0 1 1 12 0v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1V8a5 5 0 0 0-5-5z" />
+            </svg> Headphones</button>
+    </div>
+    <div class="row">
+        <div class="column mobile ">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top"
+                    src="https://images.samsung.com/is/image/samsung/p6pim/in/sm-m127gzkgins/gallery/in-galaxy-m12-m127-sm-m127gzkgins-405433977?$684_547_PNG$"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Samsung Galaxy M12</h4>
+                    <p class="card-text">Price: ₹10499</p>
+                    <a href="#" data-name="GalaxyM12" data-price="10499" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column mobile">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/713zYjA248L._SY741_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Realme Narzo 50A</h4>
+                    <p class="card-text">Price: ₹11499</p>
+                    <a href="#" data-name="Narzo50A" data-price="11499" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column mobile">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/61IJBsHm97L._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Apple iPhone 13 Pro Max</h4>
+                    <p class="card-text">Price: ₹119900</p>
+                    <a href="#" data-name="iPhone13ProMax" data-price="119900" class="add-to-cart btn btn-primary">Add
+                        to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column mobile">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/61iy2Ru9KdS._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">OnePlus Nord CE 5G</h4>
+                    <p class="card-text">Price: ₹24999</p>
+                    <a href="#" data-name="OnePlusNordCE5G" data-price="24999" class="add-to-cart btn btn-primary">Add
+                        to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column mobile">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/7155Pasn1aL._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Redmi Note 11T 5G </h4>
+                    <p class="card-text">Price: ₹17999</p>
+                    <a href="#" data-name="Redminote11T" data-price="17999" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column mobile">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/519IxSDFGWL._SL1198_.jpg"
+                    style="width: 100px;" alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Vivo Y33T</h4>
+                    <p class="card-text">Price: ₹18990</p>
+                    <a href="#" data-name="VivoY33T" data-price="18990" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="column grocery">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/71Mbc6N1XXL._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title"> BOURNVITA Cadbury BOURNVITA Health Drink Pouch (1000 g)</h4>
+                    <p class="card-text">Price: ₹379</p>
+                    <a href="#" data-name="BOURNVITA" data-price="379" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column grocery">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/71kN2aBkSAL._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Sunfeast Dark Fantasy Desserts Choconut Dipped, 100g</h4>
+                    <p class="card-text">Price: ₹50</p>
+                    <a href="#" data-name="DarkFantasy" data-price="50" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column grocery">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/61-ZHPdEe6S._SL1000_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Kissan Mixed Fruit Jam 1 Kg Bottle, With 100% Real Fruit Ingredients</h4>
+                    <p class="card-text">Price: ₹250</p>
+                    <a href="#" data-name="KissanFruitJam" data-price="250" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column grocery">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/61ltId84kyL._SL1000_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Tata Sampann 100% Pure California Almonds Whole, 500g</h4>
+                    <p class="card-text">Price: ₹570</p>
+                    <a href="#" data-name="TataSampanAlmond" data-price="570" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column grocery">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/81gw+P-sl0L._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Organic Tattva, Organic Raw Unpolished Peanuts / Groundnuts, 500 gram</h4>
+                    <p class="card-text">Price: ₹145</p>
+                    <a href="#" data-name="Peanut/Groundnuts" data-price="250" class="add-to-cart btn btn-primary">Add
+                        to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column grocery">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/71hFwEGKyZL._SL1000_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Tata Sampann Unpolished Toor Dal/ Arhar Dal, 1kg</h4>
+                    <p class="card-text">Price: ₹150</p>
+                    <a href="#" data-name="TataSampannUnpolishedToorDal/ArharDal,1kg" data-price="150"
+                        class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="column WashingMachine">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/61E5gS4YBIL._SL1500_.jpg"
+                    alt="Card image cap" style="width: 100px;">
+                <div class="card-block">
+                    <h4 class="card-title">Panasonic Washing Machine </h4>
+                    <p class="card-text">Price: ₹11999</p>
+                    <a href="#" data-name="PanasonicWashingMachine" data-price="11999"
+                        class="add-to-cart btn btn-primary">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column WashingMachine">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/712HrByqt5L._SL1500_.jpg"
+                    alt="Card image cap" style="width: 100px;">
+                <div class="card-block">
+                    <h4 class="card-title">Hisense Washing Machine</span> </h4>
+                    <p class="card-text">Price: ₹19990</p>
+                    <a href="#" data-name="HisenseWashingMachine" data-price="19990"
+                        class="add-to-cart btn btn-primary">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column WashingMachine">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/61Lt1nXUF2L._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Panasonic Washing Machine</h4>
+                    <p class="card-text">Price: ₹8990</p>
+                    <a href="#" data-name="PanasonicWashingMachines" data-price="8990"
+                        class="add-to-cart btn btn-primary">Add to cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column headphones">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/71ByNT34bfL._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">boAt Airdopes</h4>
+                    <p class="card-text">Price: ₹1299</p>
+                    <a href="#" data-name="boAtAirpodes" data-price="1299" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column headphones">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/51Lr32U1HeL._SL1400_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">Jabra Elite 2 </h4>
+                    <p class="card-text">Price: ₹3999</p>
+                    <a href="#" data-name="JabraElite2" data-price="3999" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="column headphones">
+            <div class="card" style="width: 20rem;">
+                <img class="card-img-top" src="https://m.media-amazon.com/images/I/71XP2ScwtFL._SL1500_.jpg"
+                    alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title">boAt NIRVANAA 75</h4>
+                    <p class="card-text">Price: ₹3999</p>
+                    <a href="#" data-name="boAtNIRVANAA75" data-price="3999" class="add-to-cart btn btn-primary">Add to
+                        cart</a>
+                </div>
+            </div>
+        </div>
+        <!-- END GRID -->
+    </div>
+
+    <!-- END MAIN -->
+    </div>
+    <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="padding-top: 180px;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cart</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="show-cart table">
+
+                    </table>
+                    <div>Total price: ₹<span class="total-cart"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Order now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END GRID -->
+    </div>
+
+    <!-- END MAIN -->
+    </div>
 </body>
+<script>
+    filterSelection("all")
+    function filterSelection(c) {
+      var x, i;
+      x = document.getElementsByClassName("column");
+      if (c == "all") c = "";
+      for (i = 0; i < x.length; i++) {
+        w3RemoveClass(x[i], "show");
+        if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+      }
+    }
+    
+    function w3AddClass(element, name) {
+      var i, arr1, arr2;
+      arr1 = element.className.split(" ");
+      arr2 = name.split(" ");
+      for (i = 0; i < arr2.length; i++) {
+        if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+      }
+    }
+    
+    function w3RemoveClass(element, name) {
+      var i, arr1, arr2;
+      arr1 = element.className.split(" ");
+      arr2 = name.split(" ");
+      for (i = 0; i < arr2.length; i++) {
+        while (arr1.indexOf(arr2[i]) > -1) {
+          arr1.splice(arr1.indexOf(arr2[i]), 1);     
+        }
+      }
+      element.className = arr1.join(" ");
+    }
+    
+    
+    // Add active class to the current button (highlight it)
+    var btnContainer = document.getElementById("myBtnContainer");
+    var btns = btnContainer.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function(){
+        var current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+      });
+      function myFunction() {
+        var dots = document.getElementById("dots");
+        var moreText = document.getElementById("more");
+        var btnText = document.getElementById("myBtn");
+      
+        if (dots.style.display === "none") {
+          dots.style.display = "inline";
+          btnText.innerHTML = "Read more"; 
+          moreText.style.display = "none";
+        } else {
+          dots.style.display = "none";
+          btnText.innerHTML = "Read less"; 
+          moreText.style.display = "inline";
+        }
+      }
+    }
+     // ************************************************
+            // Shopping Cart API
+            // ************************************************
+    
+            var shoppingCart = (function () {
+                // =============================
+                // Private methods and propeties
+                // =============================
+                cart = [];
+    
+                // Constructor
+                function Item(name, price, count) {
+                    this.name = name;
+                    this.price = price;
+                    this.count = count;
+                }
+    
+                // Save cart
+                function saveCart() {
+                    sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+                }
+    
+                // Load cart
+                function loadCart() {
+                    cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
+                }
+                if (sessionStorage.getItem("shoppingCart") != null) {
+                    loadCart();
+                }
+    
+    
+                // =============================
+                // Public methods and propeties
+                // =============================
+                var obj = {};
+    
+                // Add to cart
+                obj.addItemToCart = function (name, price, count) {
+                    for (var item in cart) {
+                        if (cart[item].name === name) {
+                            cart[item].count++;
+                            saveCart();
+                            return;
+                        }
+                    }
+                    var item = new Item(name, price, count);
+                    cart.push(item);
+                    saveCart();
+                }
+                // Set count from item
+                obj.setCountForItem = function (name, count) {
+                    for (var i in cart) {
+                        if (cart[i].name === name) {
+                            cart[i].count = count;
+                            break;
+                        }
+                    }
+                };
+                // Remove item from cart
+                obj.removeItemFromCart = function (name) {
+                    for (var item in cart) {
+                        if (cart[item].name === name) {
+                            cart[item].count--;
+                            if (cart[item].count === 0) {
+                                cart.splice(item, 1);
+                            }
+                            break;
+                        }
+                    }
+                    saveCart();
+                }
+    
+                // Remove all items from cart
+                obj.removeItemFromCartAll = function (name) {
+                    for (var item in cart) {
+                        if (cart[item].name === name) {
+                            cart.splice(item, 1);
+                            break;
+                        }
+                    }
+                    saveCart();
+                }
+    
+                // Clear cart
+                obj.clearCart = function () {
+                    cart = [];
+                    saveCart();
+                }
+    
+                // Count cart 
+                obj.totalCount = function () {
+                    var totalCount = 0;
+                    for (var item in cart) {
+                        totalCount += cart[item].count;
+                    }
+                    return totalCount;
+                }
+    
+                // Total cart
+                obj.totalCart = function () {
+                    var totalCart = 0;
+                    for (var item in cart) {
+                        totalCart += cart[item].price * cart[item].count;
+                    }
+                    return Number(totalCart.toFixed(2));
+                }
+    
+                // List cart
+                obj.listCart = function () {
+                    var cartCopy = [];
+                    for (i in cart) {
+                        item = cart[i];
+                        itemCopy = {};
+                        for (p in item) {
+                            itemCopy[p] = item[p];
+    
+                        }
+                        itemCopy.total = Number(item.price * item.count).toFixed(2);
+                        cartCopy.push(itemCopy)
+                    }
+                    return cartCopy;
+                }
+    
+                // cart : Array
+                // Item : Object/Class
+                // addItemToCart : Function
+                // removeItemFromCart : Function
+                // removeItemFromCartAll : Function
+                // clearCart : Function
+                // countCart : Function
+                // totalCart : Function
+                // listCart : Function
+                // saveCart : Function
+                // loadCart : Function
+                return obj;
+            })();
+    
+    
+            // *****************************************
+            // Triggers / Events
+            // ***************************************** 
+            // Add item
+            $('.add-to-cart').click(function (event) {
+                event.preventDefault();
+                var name = $(this).data('name');
+                var price = Number($(this).data('price'));
+                shoppingCart.addItemToCart(name, price, 1);
+                displayCart();
+            });
+    
+            // Clear items
+            $('.clear-cart').click(function () {
+                shoppingCart.clearCart();
+                displayCart();
+            });
+    
+    
+    
+            function displayCart() {
+                var cartArray = shoppingCart.listCart();
+                var output = "";
+                for (var i in cartArray) {
+                    output += "<tr>"
+                        + "<td>" + cartArray[i].name + "</td>"
+                        + "<td>(" + cartArray[i].price + ")</td>"
+                        + "<td><div class='input-group'><button class='minus-item input-group-addon btn btn-primary' data-name=" + cartArray[i].name + ">-</button>"
+                        + "<input type='number' class='item-count form-control' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                        + "<button class='plus-item btn btn-primary input-group-addon' data-name=" + cartArray[i].name + ">+</button></div></td>"
+                        + "<td><button class='delete-item btn btn-danger' data-name=" + cartArray[i].name + ">X</button></td>"
+                        + " = "
+                        + "<td>" + cartArray[i].total + "</td>"
+                        + "</tr>";
+                }
+                $('.show-cart').html(output);
+                $('.total-cart').html(shoppingCart.totalCart());
+                $('.total-count').html(shoppingCart.totalCount());
+            }
+    
+            // Delete item button
+    
+            $('.show-cart').on("click", ".delete-item", function (event) {
+                var name = $(this).data('name')
+                shoppingCart.removeItemFromCartAll(name);
+                displayCart();
+            })
+    
+    
+            // -1
+            $('.show-cart').on("click", ".minus-item", function (event) {
+                var name = $(this).data('name')
+                shoppingCart.removeItemFromCart(name);
+                displayCart();
+            })
+            // +1
+            $('.show-cart').on("click", ".plus-item", function (event) {
+                var name = $(this).data('name')
+                shoppingCart.addItemToCart(name);
+                displayCart();
+            })
+    
+            // Item count input
+            $('.show-cart').on("change", ".item-count", function (event) {
+                var name = $(this).data('name');
+                var count = Number($(this).val());
+                shoppingCart.setCountForItem(name, count);
+                displayCart();
+            });
+    
+            displayCart();</script>
+    
+
 </html>

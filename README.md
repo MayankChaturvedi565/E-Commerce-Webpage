@@ -1,3 +1,5 @@
+This File Contains HTML, CSS, Javascript combined
+
 step:- 1  A user select multiple category 
 
 step:- 2  A user can see the multiple products and we can add to cart them
